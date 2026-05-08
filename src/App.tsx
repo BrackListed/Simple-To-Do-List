@@ -1,6 +1,6 @@
 
 import { Left } from "./assets/Left";
-import { BookPlus } from "lucide-react";
+import { Taskcontainer } from "./assets/Taskcontainer";
 export default function App(){
   return (
     <div className="flex gap-2-">
@@ -10,8 +10,6 @@ export default function App(){
   )
 }
 
-let tasks:string[] = []
-let addTask = document.getElementById('add-task')
 
 function Main() {
   return(
@@ -22,19 +20,6 @@ function Main() {
   )
 }
 
-function Taskcontainer(){
-  return(
-    <div className= "flex flex-col p-2 w-2xl h-auto gap-2 rounded-2xl text-white" id = "add-task">
-      <form>
-        <div className="flex text-3xl items-center transition-transform hover:bg-zinc-600 cursor-pointer rounded-2xl w-fit hover:scale-110 hover:p-2 ">Add a task <BookPlus/></div>
-        <ul className="list-disc list-inside text-2xl">
-          <li>OI</li>
-          <li>Learn typescript and shiii</li>
-          <input className= "w-5xl bg-zinc-600 rounded-md outline-none focus-visible: ring-2 focus-visible: ring-violet-600"></input>
-        </ul>
-      </form>
-    </div>
-  )
-}
+
 
 
