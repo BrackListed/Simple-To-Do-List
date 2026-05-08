@@ -1,11 +1,12 @@
 import { BookPlus } from "lucide-react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 
 
 export function Taskcontainer(){
     const [tasks, setTask]= useState(JSON.parse(localStorage.getItem("task-storage") ?? "[]"))
     const [showInput, setShowInput] = useState(false)
+    const inputRef = useRef<HTMLInputElement>(null)
   return(
     <div className= "flex flex-col p-2 w-2xl h-auto gap-2 rounded-2xl text-white" id = "add-task">
       <div className="flex flex-col gap-10">
@@ -18,14 +19,15 @@ export function Taskcontainer(){
             {tasks.map((userTask:string) => (
                 <li>{userTask}</li>
             ))}
-            {showInput && <input className= "w-5xl bg-zinc-600 rounded-md outline-none focus-visible: ring-2 focus-visible: ring-violet-600" onKeyDown = {(e) =>{
+            {showInput && <input ref = {inputRef} className= "w-5xl bg-zinc-600 rounded-md outline-none focus-visible: ring-2 focus-visible: ring-violet-600" onKeyDown = {(e) =>{
                 if(e.key === "Enter"){
                     let newTask = (e.target as HTMLInputElement).value
                     setTask([...tasks, newTask])
                     localStorage.setItem("task-storage", JSON.stringify(tasks))
+                    inputRef.current!.value = "" 
                 } 
             }} onBlur={() => {
-                console.log("Clicked off??")
+                inputRef.current!.value = "" 
             }}></input>}
         </ul>
         
