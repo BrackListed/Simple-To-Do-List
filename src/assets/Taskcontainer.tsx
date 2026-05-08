@@ -24,7 +24,7 @@ export function Taskcontainer(){
                     let newTask = (e.target as HTMLInputElement).value
                     setTask([...tasks, newTask])
                     localStorage.setItem("task-storage", JSON.stringify(tasks))
-                    inputRef.current!.value = "" 
+                    setShowInput(false)
                 } 
             }} onBlur={() => {
                 inputRef.current!.value = "" 
