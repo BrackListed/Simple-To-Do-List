@@ -22,8 +22,9 @@ export function Taskcontainer(){
             {showInput && <input ref = {inputRef} className= "w-5xl bg-zinc-600 rounded-md outline-none focus-visible: ring-2 focus-visible: ring-violet-600" onKeyDown = {(e) =>{
                 if(e.key === "Enter"){
                     let newTask = (e.target as HTMLInputElement).value
-                    setTask([...tasks, newTask])
-                    localStorage.setItem("task-storage", JSON.stringify(tasks))
+                    const update = [...tasks, newTask]
+                    setTask(update)
+                    localStorage.setItem("task-storage", JSON.stringify(update))
                     setShowInput(false)
                 } 
             }} onBlur={() => {
