@@ -5,12 +5,12 @@ export function Panels(){
     <div className="flex flex-col gap-3 p-3">
       <div className="flex gap-3 transition-all hover:bg-gray-200 hover:scale-110 rounded-md hover: cursor-pointer hover:p-2">
         <Notebook/>
-        <a href = "" target = "_blank" rel = "noreferrer noopener">Plans</a>
+        <Link to ="/Plans">Plans</Link>
       </div>
 
       <div className="flex gap-3 transition-all hover:bg-gray-200 hover:scale-110 rounded-md hover:cursor-pointer hover:p-2">
         <Calendar/>
-        <a href = "" target = "_blank" rel = "noreferrer noopener">Calendar</a>
+        <Link to ="/Calendar">Calendar</Link>
       </div>
 
       <div className="flex gap-3 transition-all hover:bg-gray-200 hover:scale-110 rounded-md hover:cursor-pointer hover:p-2" >
