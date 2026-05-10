@@ -1,5 +1,6 @@
 import { HabitButtons } from "../assets/HabitButtons";
 import { useRef, useState } from "react";
+import { DateButtons } from "./Habits Assets/DateButtons";
 
 export function Habits() {
     type habit = {
@@ -8,6 +9,7 @@ export function Habits() {
     }
     const [habits, setHabit] = useState<habit[]>(JSON.parse(localStorage.getItem("user-habits")?? "null") ?? [])
     const habitRef = useRef<HTMLInputElement>(null)
+
     return(
         //Add a habit, like "Practice react, and be able to tick boxes for the entire week.
         <div className="flex flex-col items-center gap-5">
@@ -18,10 +20,18 @@ export function Habits() {
              </div>
             {habits.length === 0 && <h1 className="text-zinc-50 font-semibold text-center">You have no habits currently. Add one to get started!</h1>}
                 {habits.map((habit) => (
-                    <div className="flex flex-col bg-zinc-700 rounded-lg w-2xl justify-center text-zinc-50 p-2">
+                    <div className="flex flex-col bg-zinc-700 rounded-lg w-3xl justify-center text-zinc-50 p-2 gap-2 ">
                         <div id = "header" className="flex justify-between items-center ">
                             {habit.name}
                             <HabitButtons delHabit={() => deleteHabit(habit.id)}>Delete</HabitButtons>
+                        </div>
+
+                        <div className="flex flex-col gap-2 p-2 bg-zinc-800 rounded-md ">
+                            <div id = "top" className="flex justify-between">
+                                <h3 className="text-amber-600">Streak🔥: 5 </h3>
+                                <h3>Date: May 10, 2026</h3>
+                            </div>
+                            <DateButtons/>
                         </div>
 
                         <div>
@@ -41,9 +51,10 @@ export function Habits() {
         setHabit(updatedHabits)
         localStorage.setItem("user-habits", JSON.stringify(updatedHabits))
     }
+
+    function deleteHabit(id: number){
+        setHabit(habits.filter(removehabit => removehabit.id !== id))
+    }
 }
 
-function deleteHabit(id: number){
-    console.log(id)
-}
 
