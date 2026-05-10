@@ -1,24 +1,29 @@
 
 import { Left } from "./assets/Left";
-import { Taskcontainer } from "./assets/Taskcontainer";
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { Main } from "./assets/Main";
+
 export default function App(){
   return (
-    <div className="flex gap-2-">
-      <Left/>
-      <Main/>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path = "/" element = {
+      <div className="flex gap-2-">
+        <Left/>
+        <Main/>
+      </div>
+      }></Route>
+
+      
+    </Routes>
+
+    </BrowserRouter>
   )
 }
 
 
-function Main() {
-  return(
-    <div className="flex flex-col p-10 gap-10">
-      <h1 className="font-bold text-5xl text-amber-50 ">Today's Tasks: </h1>
-      <Taskcontainer/>
-    </div>
-  )
-}
 
 
 
