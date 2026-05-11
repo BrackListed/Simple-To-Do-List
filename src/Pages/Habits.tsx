@@ -11,6 +11,8 @@ export function Habits() {
     const habitRef = useRef<HTMLInputElement>(null)
     const [streak, setStreak] = useState(JSON.parse(localStorage.getItem("streak-storage") ?? "0") ?? 0)
     const [today, setToday] = useState((localStorage.getItem("date-storage") ?? new Date().toLocaleDateString()))
+    const [previousDate, setpreviousDate] = useState(localStorage.getItem("previous-date") ?? "")
+
 
     return(
         //Add a habit, like "Practice react, and be able to tick boxes for the entire week.
@@ -33,7 +35,7 @@ export function Habits() {
                                 <h3 className="text-amber-600">Streak🔥: {streak} </h3>
                                 <h3>Date: {new Date().toLocaleDateString()}</h3>
                             </div>
-                            <DateButtons addStreak = {(date) => addStreak(date)}></DateButtons>
+                            <DateButtons addStreak = {(date) => addStreak(date)} clickedDate = {previousDate}></DateButtons>
                         </div>
 
                         <div>
@@ -70,6 +72,8 @@ export function Habits() {
                 let newToday = day.toLocaleDateString()
                 setToday(newToday.toLocaleString())
                 localStorage.setItem("date-storage", newToday)
+                let completedDate = new Date().toLocaleDateString()
+                setpreviousDate(completedDate)
             }
         }
     }
