@@ -9,6 +9,8 @@ export function Habits() {
     }
     const [habits, setHabit] = useState<habit[]>(JSON.parse(localStorage.getItem("user-habits")?? "null") ?? [])
     const habitRef = useRef<HTMLInputElement>(null)
+    const [streak, setStreak] = useState(JSON.parse(localStorage.getItem("streak-storage") ?? "0") ?? 0)
+    const [today, setToday] = useState((localStorage.getItem("date-storage") ?? new Date().toLocaleDateString()))
 
     return(
         //Add a habit, like "Practice react, and be able to tick boxes for the entire week.
@@ -28,10 +30,10 @@ export function Habits() {
 
                         <div className="flex flex-col gap-2 p-2 bg-zinc-800 rounded-md ">
                             <div id = "top" className="flex justify-between">
-                                <h3 className="text-amber-600">Streak🔥: 5 </h3>
-                                <h3>Date: May 10, 2026</h3>
+                                <h3 className="text-amber-600">Streak🔥: {streak} </h3>
+                                <h3>Date: {new Date().toLocaleDateString()}</h3>
                             </div>
-                            <DateButtons/>
+                            <DateButtons addStreak = {(date) => addStreak(date)}></DateButtons>
                         </div>
 
                         <div>
@@ -50,11 +52,28 @@ export function Habits() {
         const updatedHabits = [...habits, newHabit]
         setHabit(updatedHabits)
         localStorage.setItem("user-habits", JSON.stringify(updatedHabits))
+        console.log(today)
     }
 
     function deleteHabit(id: number){
         setHabit(habits.filter(removehabit => removehabit.id !== id))
     }
+
+    function addStreak(clickedDate: Date){
+        if(new Date().toLocaleDateString() === clickedDate.toLocaleDateString()){
+            if (clickedDate.toLocaleDateString() === today) {
+                let newStreak = streak + 1
+                setStreak(newStreak)
+                localStorage.setItem('streak-storage', JSON.stringify(newStreak))
+                let day = new Date()
+                day.setDate(day.getDate() + 1)
+                let newToday = day.toLocaleDateString()
+                setToday(newToday.toLocaleString())
+                localStorage.setItem("date-storage", newToday)
+            }
+        }
+    }
 }
+
 
 
