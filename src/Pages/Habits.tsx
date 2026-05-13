@@ -6,10 +6,11 @@ export function Habits() {
     type habit = {
         id: number;
         name: string;
+        count: number
     }
     const [habits, setHabit] = useState<habit[]>(JSON.parse(localStorage.getItem("user-habits")?? "null") ?? [])
     const habitRef = useRef<HTMLInputElement>(null)
-    const [streak, setStreak] = useState(JSON.parse(localStorage.getItem("streak-storage") ?? "0") ?? 0)
+    // const [streak, setStreak] = useState(JSON.parse(localStorage.getItem("streak-storage") ?? "0") ?? 0)
     const [today, setToday] = useState((localStorage.getItem("date-storage") ?? new Date().toLocaleDateString()))
     const [previousDate, setpreviousDate] = useState(localStorage.getItem("previous-date") ?? "")
 
@@ -32,10 +33,10 @@ export function Habits() {
 
                         <div className="flex flex-col gap-2 p-2 bg-zinc-800 rounded-md ">
                             <div id = "top" className="flex justify-between">
-                                <h3 className="text-amber-600">Streak🔥: {streak} </h3>
+                                <h3 className="text-amber-600">Streak🔥: {habit.count} </h3>
                                 <h3>Date: {new Date().toLocaleDateString()}</h3>
                             </div>
-                            <DateButtons addStreak = {(date) => addStreak(date)} clickedDate = {previousDate}></DateButtons>
+                            <DateButtons addStreak = {(date) => addStreak(date, habit.id)} clickedDate = {previousDate}></DateButtons>
                         </div>
 
                         <div>
@@ -48,9 +49,11 @@ export function Habits() {
         </div>
     )
 
+
+
     function addHabit() {
         let userHabit = habitRef.current!.value
-        let newHabit = {id: Date.now(), name: userHabit }
+        let newHabit = {id: Date.now(), name: userHabit, count: 0}
         const updatedHabits = [...habits, newHabit]
         setHabit(updatedHabits)
         localStorage.setItem("user-habits", JSON.stringify(updatedHabits))
@@ -61,12 +64,19 @@ export function Habits() {
         setHabit(habits.filter(removehabit => removehabit.id !== id))
     }
 
-    function addStreak(clickedDate: Date){
+    function addStreak(clickedDate: Date, habitId:number){
         if(new Date().toLocaleDateString() === clickedDate.toLocaleDateString()){
             if (clickedDate.toLocaleDateString() === today) {
-                let newStreak = streak + 1
-                setStreak(newStreak)
-                localStorage.setItem('streak-storage', JSON.stringify(newStreak))
+                const updatedHabits = habits.map((h => {
+                    if(h.id === habitId){
+                        return(
+                            {...h, count: h.count + 1}
+                        )
+                    }
+                    return h
+                 }))
+                 setHabit(updatedHabits)
+                 localStorage.setItem("user-habits", JSON.stringify(updatedHabits))
                 let day = new Date()
                 day.setDate(day.getDate() + 1)
                 let newToday = day.toLocaleDateString()
@@ -78,6 +88,5 @@ export function Habits() {
         }
     }
 }
-
 
 
